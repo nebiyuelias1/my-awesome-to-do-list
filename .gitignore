@@ -1,2 +1,3 @@
+*.py[cod]
 /backend/venv
 /backend/app/__pycache__
