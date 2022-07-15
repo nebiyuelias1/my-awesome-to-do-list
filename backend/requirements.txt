@@ -1,5 +1,6 @@
-fastapi==0.78.0
-uvicorn==0.18.2
-SQLAlchemy==1.4.39
-psycopg2==2.9.3
 email-validator==1.2.1
+fastapi==0.78.0
+passlib==1.7.4
+psycopg2==2.9.3
+SQLAlchemy==1.4.39
+uvicorn==0.18.2
