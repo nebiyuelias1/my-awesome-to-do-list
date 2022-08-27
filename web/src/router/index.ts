@@ -9,17 +9,19 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: CreateAccountView
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: LoginView
+      component: HomeView,
+      children: [
+        {
+          path: '/signup',
+          name: 'signup',
+          component: CreateAccountView
+        },
+        {
+          path: '/login',
+          name: 'login',
+          component: LoginView
+        },
+      ]
     },
     {
       path: '/about',

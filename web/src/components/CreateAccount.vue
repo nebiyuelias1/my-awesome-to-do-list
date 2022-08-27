@@ -1,4 +1,6 @@
 <script>
+import { isValidEmail } from "@/utils";
+
 export default {
     data() {
         return {
@@ -21,18 +23,22 @@ export default {
                 is_superuser: false,
             }
 
-            const response = await fetch('http://localhost:8000/api/v1/users/', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/users/', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
 
-            if (response.status === 200) {
-                this.$router.push({ name: 'login' });
-            } else {
-                alert('Something went wrong!');
+                if (response.status === 200) {
+                    this.$router.push({ name: 'login' });
+                } else {
+                    alert('Something went wrong');
+                }
+            } catch {
+                alert('Something went wrong');
             }
         },
         isValid() {
@@ -40,12 +46,9 @@ export default {
                 return false;
             }
 
-            const regexPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            if (!regexPattern.test(this.email)) {
+            if (!isValidEmail(this.email)) {
                 return false;
             }
-
-
 
             if (this.password !== this.confirmPassword) {
                 return false;
@@ -81,44 +84,11 @@ export default {
             <input type="password" id="confirmpassword" v-model="confirmPassword">
         </div>
 
-        <button class="create-button" :disabled="!isValid()" @click.prevent="submitForm">Create Account</button>
+        <button class="btn" :disabled="!isValid()" @click.prevent="submitForm">Create Account</button>
     </form>
 
 </template>
 
 <style scoped>
-.form-control {
-    margin-bottom: 0.25rem;
-}
 
-.form-control input {
-    display: block;
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid;
-    width: 100%;
-}
-
-.form-control input:focus {
-    outline: 1px solid hsla(160, 100%, 37%, 1);
-    border: none;
-}
-
-.create-button {
-    margin-top: 1rem;
-    display: block;
-    width: 100%;
-    padding: 0.5rem;
-    background-color: hsla(160, 100%, 37%, 1);
-    border: none;
-    color: #fff;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.create-button[disabled] {
-    background-color: rgba(116, 116, 116, 0.322);
-    cursor: unset;
-}
 </style>
